@@ -1,9 +1,9 @@
 <template>
   <div class="justify-content-center app">
-    <table class="table table-hover table-dark text-center">
+    <table class="table table-hover table-dark text-center m-0">
       <thead>
         <tr class="table-active">
-          <th scope="col">Ville</th>
+          <th scope="col">Zone</th>
           <th scope="col">Details</th>
         </tr>
       </thead>
@@ -16,53 +16,85 @@
         </tr>
       </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center app">
-        <li class="page-item">
-          <p class="page-link text-warning bg-dark" @click="pageSuivant(pagination.prev)">Precedent</p>
-        </li>
-        <li class="page-item" v-if="pagination.first<=pagination.self-2">
-          <p
-            class="page-link bg-dark text-warning"
-            @click="pageSuivant(pagination.first)"
-          >{{pagination.first}}</p>
-        </li>
-        <li class="page-item" v-if="pagination.first<=pagination.self-3">
-          <p class="page-link bg-dark text-warning">...</p>
-        </li>
+    <div class="justify-content-center">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span
+            class="input-group-text bg-jaunefonce border-warning"
+            id="basic-addon1"
+            @keyup.enter="pageSuivant(pagination.self)"
+          >Nb élements</span>
+        </div>
+        <input
+          type="number"
+          class="form-control border-warning text-warning bg-dark text-center"
+          aria-describedby="basic-addon1"
+          v-model="size"
+          value="10"
+        >
+        <div class="input-group-append">
+          <button
+            class="btn btn-warning"
+            type="button"
+            id="button-addon2 "
+            @click="pageSuivant(pagination.self)"
+          >Valider</button>
+        </div>
+      </div>
+      <nav aria-label="Page navigation border-warning example">
+        <ul class="pagination justify-content-center m-0 app">
+          <li class="page-item">
+            <p
+              class="page-link border-warning text-warning bg-dark"
+              @click="pageSuivant(pagination.prev)"
+            >Precedent</p>
+          </li>
+          <li class="page-item" v-if="pagination.first<=pagination.self-2">
+            <p
+              class="page-link border-warning bg-dark text-warning"
+              @click="pageSuivant(pagination.first)"
+            >{{pagination.first}}</p>
+          </li>
+          <li class="page-item" v-if="pagination.first<=pagination.self-3">
+            <p class="page-link border-warning bg-dark text-warning">...</p>
+          </li>
 
-        <li class="page-item" v-if="pagination.prev!=pagination.self">
-          <p
-            class="page-link bg-dark text-warning"
-            @click="pageSuivant(pagination.prev)"
-          >{{pagination.prev}}</p>
-        </li>
+          <li class="page-item" v-if="pagination.prev!=pagination.self">
+            <p
+              class="page-link border-warning bg-dark text-warning"
+              @click="pageSuivant(pagination.prev)"
+            >{{pagination.prev}}</p>
+          </li>
 
-        <li class="page-item">
-          <p class="page-link text-warning bg-dark active">{{pagination.self}}</p>
-        </li>
+          <li class="page-item">
+            <p class="page-link border-warning text-warning bg-dark active">{{pagination.self}}</p>
+          </li>
 
-        <li class="page-item" v-if="pagination.next!=pagination.self">
-          <p
-            class="page-link text-warning bg-dark"
-            @click="pageSuivant(pagination.next)"
-          >{{pagination.next}}</p>
-        </li>
+          <li class="page-item" v-if="pagination.next!=pagination.self">
+            <p
+              class="page-link border-warning text-warning bg-dark"
+              @click="pageSuivant(pagination.next)"
+            >{{pagination.next}}</p>
+          </li>
 
-        <li class="page-item" v-if="pagination.last-3>=pagination.self">
-          <p class="page-link bg-dark text-warning">...</p>
-        </li>
-        <li class="page-item" v-if="pagination.last-2>=pagination.self">
-          <p
-            class="page-link text-warning bg-dark"
-            @click="pageSuivant(pagination.last)"
-          >{{pagination.last}}</p>
-        </li>
-        <li class="page-item">
-          <p class="page-link text-warning bg-dark" @click="pageSuivant(pagination.next)">Suivant</p>
-        </li>
-      </ul>
-    </nav>
+          <li class="page-item" v-if="pagination.last-3>=pagination.self">
+            <p class="page-link border-warning bg-dark text-warning">...</p>
+          </li>
+          <li class="page-item" v-if="pagination.last-2>=pagination.self">
+            <p
+              class="page-link border-warning text-warning bg-dark"
+              @click="pageSuivant(pagination.last)"
+            >{{pagination.last}}</p>
+          </li>
+          <li class="page-item">
+            <p
+              class="page-link border-warning text-warning bg-dark"
+              @click="pageSuivant(pagination.next)"
+            >Suivant</p>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>
 
@@ -71,7 +103,11 @@ import axios from "axios";
 export default {
   props: ["apiurl"],
   data() {
-    return { listSeries: "", size: this.$route.query.size, pagination: {} };
+    return {
+      listSeries: "",
+      size: this.$route.query.size ? this.$route.query.size : 10,
+      pagination: {}
+    };
   },
   methods: {
     getSerie: function() {
@@ -101,7 +137,7 @@ export default {
     }
   },
   watch: {
-    "$route.query.page"() {
+    "$route.query"() {
       this.getSerie();
     }
   },
@@ -116,6 +152,9 @@ export default {
   cursor: pointer;
   background-color: #454d55 !important;
 }
+.bg-jaunefonce {
+  background-color: #d39e00;
+}
 .active {
   background-color: #ffc107 !important;
   color: #454d55 !important;
@@ -123,5 +162,8 @@ export default {
 .active:hover {
   background-color: #454d55 !important;
   color: #ffc107 !important;
+}
+li p {
+  margin: 0;
 }
 </style>
