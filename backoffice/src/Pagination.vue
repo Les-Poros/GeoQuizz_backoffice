@@ -1,22 +1,5 @@
 <template>
-  <div class="justify-content-center app">
-    <table class="table table-hover table-dark text-center m-0">
-      <thead>
-        <tr class="table-active">
-          <th scope="col">Zone</th>
-          <th scope="col">Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(serie,index) in listSeries" :key="index">
-          <td class="align-middle">{{serie.ville}}</td>
-          <td class="align-middle">
-            <button class="btn btn-warning">Voir Details</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="justify-content-center">
+<div class="justify-content-center">
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <span
@@ -95,54 +78,23 @@
         </ul>
       </nav>
     </div>
-  </div>
 </template>
 
 <script>
-import axios from "axios";
 export default {
-  props: ["apiurl"],
+  name:"pagination",
+  props: ["pagination"],
   data() {
     return {
-      listSeries: "",
-      size: this.$route.query.size ? this.$route.query.size : 10,
-      pagination: {}
+      size: this.$route.query.size ? this.$route.query.size : 10
     };
   },
   methods: {
-    getSerie: function() {
-      axios
-        .get(this.apiurl + "series", {
-          params: {
-            page: this.$route.query.page,
-            size: this.size
-          }
-        })
-        .then(response => {
-          this.listSeries = response["data"]["content"];
-          response["data"]["links"].forEach(element => {
-            this.$set(
-              this.pagination,
-              element.rel.split(" - page:")[0],
-              element.rel.split(" - page:")[1]
-            );
-          });
-        });
-    },
     pageSuivant: function(page) {
       this.$router.push({
-        name: "Series",
         query: { page: page, size: this.size }
       });
     }
-  },
-  watch: {
-    "$route.query"() {
-      this.getSerie();
-    }
-  },
-  created() {
-    this.getSerie();
   }
 };
 </script>
