@@ -2,7 +2,7 @@
   <div class="justify-content-center text-white app">
     <h1 class="bg-warning m-0 text-dark text-center">Photos de la série</h1>
     <div class="m-0 text-dark text-center" style="background-color:#e0a800;">
-      <router-link :to="{ path: '/ok'}">
+      <router-link :to="{ name: 'CreationPhoto' ,params:{idSerie:this.$route.params.id}}">
         <button class="btn m-1 btn-outline-dark">Ajouter une photo</button>
       </router-link>
     </div>

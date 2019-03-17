@@ -3,7 +3,7 @@
     
     <h1 class="bg-warning m-0 text-dark text-center">Séries de Photos</h1> 
      <div class="m-0 text-dark text-center" style="background-color:#e0a800;">
-      <router-link :to="{ path: '/ok'}">
+      <router-link :to="{ name: 'CreationSerie'}">
         <button class="btn m-1 btn-outline-dark">Créer une série</button>
       </router-link>
     </div>

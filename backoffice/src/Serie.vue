@@ -3,7 +3,10 @@
       
     <h1 class="bg-warning m-0 text-dark text-center">Infos de la série</h1> 
     <div class="m-0 text-dark text-center" style="background-color:#e0a800;">
-      <router-link :to="{ path: '/ok'}">
+      <router-link :to="{ name: 'Series'}">
+        <button class="btn m-1 btn-outline-dark">Retour liste séries</button>
+      </router-link>
+      <router-link :to="{ name: 'ModifSerie',params:{id:serie.id}}">
         <button class="btn m-1 btn-outline-dark">Modifier la série</button>
       </router-link>
     </div>
