@@ -1,8 +1,13 @@
 <template>
   <div class="d-flex justify-content-center app">
-    <router-link :to="{ name: 'Series', query: { page:0,size:5  }}">
+    <router-link :to="{ name: 'Login'}">
       <div class="text-center btn btn-primary">
-        Voir les Series
+        Se connecter
+      </div>
+    </router-link>
+    <router-link :to="{ name: 'Inscription'}">
+      <div class="text-center btn btn-primary">
+        S'inscrire
       </div>
     </router-link>
   </div>

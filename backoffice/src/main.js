@@ -6,8 +6,11 @@ import PhotosSerie from "./ListePhotos.vue";
 import Photo from "./Photo.vue";
 import GestionSerie from "./GestionSerie.vue";
 import GestionPhoto from "./GestionPhoto.vue";
+import Login from "./Login.vue";
+import Inscription from "./Inscription.vue";
 
 import axios from "axios";
+
 const routes = [
   { name: "Accueil", path: "/", component: Accueil },
   { name: "Series", path: "/series", component: ListeSeries },
@@ -18,6 +21,8 @@ const routes = [
   { name: "ModifSerie", path: "/gestion/series/:id", component: GestionSerie },
   { name: "CreationPhoto", path: "/gestion/series/:idSerie/photos/creation", component: GestionPhoto },
   { name: "ModifPhoto", path: "/gestion/series/:idSerie/photos/:idPhoto", component: GestionPhoto },
+  { name: "Login", path: "/login", component: Login },
+  { name: "Inscription", path: "/inscription", component: Inscription }
 ];
 
 
@@ -39,13 +44,20 @@ const app = new Vue({
       this.load = false;
       return Promise.reject(error);
     });
-  
+
+    axios.defaults.withCredentials = true;
+
     axios.interceptors.response.use((response) => {
       this.load = false;
       return response;
     }, (error) => {
+
       this.load = false;
+      if((""+error).includes("403"))
+        this.$router.push( {name: "Login"});
       return Promise.reject(error);
     });
   }
+
+  
 }).$mount("#app");
