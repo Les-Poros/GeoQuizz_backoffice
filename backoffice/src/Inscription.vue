@@ -2,37 +2,38 @@
   <div class="text-center text-dark">
     <h1 class="bg-warning text-dark m-0 text-center">Inscription</h1>
     <dl class="row bg-dark m-0 text-center">
-      <dt class="col-sm-3 jaune border border-warning py-2">Username</dt>
+      <dt class="col-sm-3 jaune border border-warning py-2">Pseudo</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
         <input
           type="text"
           class="form-control border-0 h-100 text-warning bg-dark text-center"
           aria-describedby="basic-addon1"
-          placeholder="username"
+          placeholder="pseudo"
           v-model="username"
         >
       </dd>
 
-      <dt class="col-sm-3 jaune border border-warning py-2">Password</dt>
+      <dt class="col-sm-3 jaune border border-warning py-2">Mot de passe</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
         <input
           type="password"
           class="form-control border-0 h-100 text-warning bg-dark text-center"
           aria-describedby="basic-addon1"
-          placeholder="password"
+          placeholder="mot de passe"
           @keyup.enter="connection"
           v-model="password"
         >
       </dd>
     </dl>
-    <div class="m-0 p-1 text-dark text-center bg-warning">Deja un compte ?
+    <div v-if="echec" class="m-0 p-1 text-dark text-center jaune">Pseudo deja utilisé</div>
+    <div class="m-0 p-1 text-dark text-center jaune">Deja un compte ?
       <router-link class="text-secondary text-underline" :to="{ name: 'Login'}">Se connecter ici</router-link>
     </div>
     <div class="m-0 p-1 text-dark text-center bg-warning">
       <button
         v-bind:disabled="!password || !username"
-        class="btn btn-dark"
-        @click="inscription"
+        class="btn btn-primary"
+        @click.once="inscription"
       >S'inscrire</button>
     </div>
   </div>
@@ -45,7 +46,8 @@ export default {
   data() {
     return {
       password: "",
-      username: ""
+      username: "",
+      echec: false
     };
   },
   methods: {
@@ -75,10 +77,11 @@ export default {
                 name: "Series",
                 query: { page: 0, size: 6 }
               });
-            })
-            .catch(error => {
-              this.echec = true;
             });
+        })
+
+        .catch(error => {
+          this.echec = true;
         });
     }
   },

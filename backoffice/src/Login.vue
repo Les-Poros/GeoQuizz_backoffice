@@ -2,31 +2,31 @@
   <div class="text-center text-dark">
     <h1 class="bg-warning text-dark m-0 text-center">Connexion</h1>
     <dl class="row bg-dark m-0 text-center">
-      <dt class="col-sm-3 jaune border border-warning py-2">Username</dt>
+      <dt class="col-sm-3 jaune border border-warning py-2">Pseudo</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
         <input
           type="text"
           class="form-control border-0 h-100 text-warning bg-dark text-center"
           aria-describedby="basic-addon1"
-          placeholder="username"
+          placeholder="pseudo"
           v-model="username"
         >
       </dd>
 
-      <dt class="col-sm-3 jaune border border-warning py-2">Password</dt>
+      <dt class="col-sm-3 jaune border border-warning py-2">Mot de passe</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
         <input
           type="password"
           class="form-control border-0 h-100 text-warning bg-dark text-center"
           aria-describedby="basic-addon1"
-          placeholder="password"
+          placeholder="mot de passe"
           @keyup.enter="connection"
           v-model="password"
         >
       </dd>
     </dl>
-     <div v-if="echec" class="m-0 p-1 text-dark text-center bg-warning">Identifiant incorrecte</div>
-    <div class="m-0 p-1 text-dark text-center bg-warning">Pas de compte ? 
+     <div v-if="echec" class="m-0 p-1 text-dark text-center jaune">Identifiant incorrect</div>
+    <div class="m-0 p-1 text-dark text-center jaune">Pas de compte ? 
         <router-link class="text-secondary text-underline" :to="{ name: 'Inscription'}">
               S'inscrire ici
             </router-link>

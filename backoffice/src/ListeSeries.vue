@@ -1,10 +1,10 @@
 <template>
   <div class="justify-content-center app">
     
-    <h1 class="bg-warning m-0 text-dark text-center">Séries de Photos</h1> 
+    <h1 class="bg-warning m-0 text-dark text-center">Zones de jeu</h1> 
      <div class="m-0 text-dark text-center" style="background-color:#e0a800;">
       <router-link :to="{ name: 'CreationSerie'}">
-        <button class="btn m-1 btn-outline-dark">Créer une série</button>
+        <button class="btn m-1 btn-primary">Créer une zone</button>
       </router-link>
     </div>
     <table class="table table-hover table-dark text-center m-0">
@@ -18,7 +18,7 @@
         <tr v-for="(serie,index) in listSeries" :key="index">
           <td class="align-middle">{{serie.ville}}</td>
           <td class="align-middle">
-            <router-link :to="{ name: 'Serie', params: { id:serie.id}, query: { page: 0, size:6 }}">
+            <router-link :to="{ name: 'Serie', params: { idSerie:serie.id}, query: { page: 0, size:6 }}">
               <button class="btn btn-warning">Voir Details</button>
             </router-link>
           </td>

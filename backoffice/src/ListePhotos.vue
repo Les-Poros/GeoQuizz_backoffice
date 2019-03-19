@@ -1,9 +1,9 @@
 <template>
   <div class="justify-content-center text-white app">
-    <h1 class="bg-warning m-0 text-dark text-center">Photos de la série</h1>
+    <h1 class="bg-warning m-0 text-dark text-center">Photos de la zone</h1>
     <div class="m-0 text-dark text-center" style="background-color:#e0a800;">
-      <router-link :to="{ name: 'CreationPhoto' ,params:{idSerie:this.$route.params.id}}">
-        <button class="btn m-1 btn-outline-dark">Ajouter une photo</button>
+      <router-link :to="{ name: 'CreationPhoto' ,params:{idSerie:this.$route.params.idSerie}}">
+        <button class="btn m-1 btn-primary">Ajouter une photo</button>
       </router-link>
     </div>
     <div class="row bg-dark m-0">
@@ -13,10 +13,10 @@
         :key="index"
         style="width: 18rem;"
       >
-        <img :src="apiurl+photo.url" class="card-img-top photo" alt>
+        <img :src="photo.url" class="card-img-top photo" alt>
         <div class="card-body">
           <h5 class="card-title">{{photo.descr}}</h5>
-          <router-link :to="{ name: 'Photo', params: { idSerie:$route.params.id,idPhoto:photo.id}}">
+          <router-link :to="{ name: 'Photo', params: { idSerie:$route.params.idSerie,idPhoto:photo.id}}">
             <button class="btn btn-warning">Voir Details</button>
           </router-link>
         </div>
@@ -43,7 +43,7 @@ export default {
   methods: {
     getPhotos: function() {
       axios
-        .get(this.apiurl + "series/" + this.$route.params.id + "/photos", {
+        .get(this.apiurl + "series/" + this.$route.params.idSerie + "/photos", {
           params: {
             page: this.$route.query.page,
             size: this.$route.query.size

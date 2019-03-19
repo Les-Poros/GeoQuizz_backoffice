@@ -49,43 +49,29 @@
           multiple
         >
         <label class="custom-file-label bg-dark h-100 border-0 text-warning" for="image">
-          <span v-if="url">{{url.split('img/')[1]}}</span>
-          <span v-else class="text-secondary">Choisir une image</span>
+          <span v-if="image">{{image.name}}</span>
+          <span v-else class="text-secondary">Remplacer l'image si besoin</span>
         </label>
-      </dd>
-
-      <dt class="col-sm-3 jaune border border-warning py-2">url générée</dt>
-      <dd class="col-sm-9 border border-warning m-0 p-0">
-        <input
-          type="text"
-          class="form-control border-0 m-0 h-100 text-warning bg-dark text-center"
-          aria-describedby="basic-addon1"
-          placeholder="url générée"
-          disabled
-          v-bind:value="url"
-        >
       </dd>
     </dl>
 
     <div class="m-0 p-1 text-dark text-center bg-warning">
       <button
-        v-if="!$route.params.idPhoto"
-        v-bind:disabled="!descr || !latitude || !longitude || !image"
-        class="btn btn-dark"
-        @click="creerPhoto"
-      >Créer la photo</button>
-      <button
-        v-else
         v-bind:disabled="!descr || !latitude || !longitude"
-        class="btn btn-dark"
-        @click="ModifierPhoto"
-      >Modifier la photo</button>
+        class="btn btn-primary"
+        @click.once="uploadImage"
+      >
+        <span v-if="$route.params.idPhoto">Modifier la photo</span>
+        <span v-else>Créer la photo</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import conf from "./conf/conf.json";
+import CryptoJS from "crypto-js";
 export default {
   props: ["apiurl"],
   data() {
@@ -105,7 +91,8 @@ export default {
           {
             descr: this.descr,
             latitude: this.latitude,
-            longitude: this.longitude
+            longitude: this.longitude,
+            url: this.url
           },
           {
             headers: {
@@ -114,7 +101,13 @@ export default {
           }
         )
         .then(response => {
-          this.uploadImage(response["data"]["id"]);
+          this.$router.push({
+            name: "Photo",
+            params: {
+              idSerie: this.$route.params.idSerie,
+              idPhoto: response.data.id
+            }
+          });
         });
     },
     ModifierPhoto: function() {
@@ -137,45 +130,40 @@ export default {
           }
         )
         .then(response => {
-          if (this.image) this.uploadImage(this.$route.params.idPhoto);
-          else
-            this.$router.push({
-              name: "Photo",
-              params: {
-                idSerie: this.$route.params.idSerie,
-                idPhoto: this.$route.params.idPhoto
-              }
-            });
+          this.$router.push({
+            name: "Photo",
+            params: {
+              idSerie: this.$route.params.idSerie,
+              idPhoto: this.$route.params.idPhoto
+            }
+          });
         });
     },
     previewImage() {
       this.image = this.$refs.image.files[0];
-      this.url = "/img/" + this.image.name;
     },
     uploadImage(photoId) {
-      let formData = new FormData();
-      formData.append("image", this.image);
-      axios
-        .put(
-          this.apiurl +
-            "series/" +
-            this.$route.params.idSerie +
-            "/photos/" +
-            photoId +
-            "/image",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          }
-        )
-        .then(response => {
-          this.$router.push({
-            name: "Photo",
-            params: { idSerie: this.$route.params.idSerie, idPhoto: photoId }
+      if (this.image) {
+        let timestamp = ((Date.now() / 1000) | 0).toString();
+        let stringHash = "timestamp=" + timestamp + conf.imageSecretAPI;
+        let signature = CryptoJS.SHA1(stringHash).toString();
+        let form = new FormData();
+        form.append("file", this.image);
+        form.append("timestamp", timestamp);
+        form.append("api_key", conf.imageKeyApi);
+        form.append("signature", signature);
+        axios
+          .post(conf.imageUrl, form, {
+            withCredentials: false
+          })
+          .then(response => {
+            this.url = response.data.secure_url;
+            if (this.$route.params.photoId) this.ModifierPhoto();
+            else this.creerPhoto();
           });
-        });
+      }else{
+        this.ModifierPhoto();
+      }
     },
     initPage: function() {
       if (this.$route.params.idSerie && this.$route.params.idPhoto) {
@@ -203,7 +191,6 @@ export default {
       this.latitude = "";
       this.longitude = "";
       this.image = "";
-      this.url = "";
       this.initPage();
     }
   },

@@ -1,1 +1,5 @@
-{"apiUrl":"http://192.168.99.100:8083/"}
+{"apiUrl":"http://192.168.99.100:8083/",
+"imageUrl":"https://api.cloudinary.com/v1_1/lesporos/image/upload",
+"imageKeyApi":"414295376186362",
+"imageSecretAPI":"8nzZYlAX-zeo6k-Z8XNANXypq38"
+}
