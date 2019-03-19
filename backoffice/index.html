@@ -18,6 +18,9 @@
         margin: 20px;
         width: 200px;
       }
+      [v-cloak]{
+        display: none;
+      }
     </style>
   </head>
   <body class="bg-secondary">
@@ -29,12 +32,13 @@
       </div>
       <div class="w-100 bg-dark">
         <router-link
+        v-cloak
           v-if="$route.params.idSerie"
           :to="{ name: 'Serie',params:{idSerie:$route.params.idSerie}, query: { page: 0, size:6 }}"
         >
           <button class="btn m-2 btn-warning"> Retour Zone Actuelle</button>
         </router-link>
-        <router-link v-if="$route.params.idPhoto" :to="{ name: 'Photo',params:{idSerie:$route.params.idSerie,idPhoto:$route.params.idPhoto}}">
+        <router-link  v-cloak v-if="$route.params.idPhoto" :to="{ name: 'Photo',params:{idSerie:$route.params.idSerie,idPhoto:$route.params.idPhoto}}">
           <button class="btn m-2 btn-warning">Retour Photo Actuelle</button>
         </router-link>
       </div>
