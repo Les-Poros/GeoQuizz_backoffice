@@ -8,9 +8,7 @@ Membres du projet :
 
 # Prérequis :
 
-* Maven
-* Docker
-* Docker-compose
+* Avoir lancé les micro-services
 
 # Pour récupérer le player
 
@@ -20,7 +18,4 @@ Membres du projet :
     
 # Pour lancer le player
 
-* mvn clean install -DskipTests
-* docker-compose up --build -d
-
-Celui ci sera alors accessible sur le port 8083 de votre adresse docker
+* 
