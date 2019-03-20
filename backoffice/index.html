@@ -26,11 +26,13 @@
   <body class="bg-secondary">
     <div id="app">
       <div class="w-100 bg-warning">
+         <!--Bouton listes series-->
         <router-link :to="{ name: 'Series'}">
           <button class="btn m-1 btn-primary">Liste des Zones</button>
         </router-link>
       </div>
       <div class="w-100 bg-dark">
+        <!--Bouton serie actuelle-->
         <router-link
         v-cloak
           v-if="$route.params.idSerie"
@@ -38,6 +40,7 @@
         >
           <button class="btn m-2 btn-warning"> Retour Zone Actuelle</button>
         </router-link>
+        <!--Bouton photo actuelle-->
         <router-link  v-cloak v-if="$route.params.idPhoto" :to="{ name: 'Photo',params:{idSerie:$route.params.idSerie,idPhoto:$route.params.idPhoto}}">
           <button class="btn m-2 btn-warning">Retour Photo Actuelle</button>
         </router-link>
@@ -51,15 +54,17 @@
             />
           </div>
         </div>
+        <!--Spinner de chargement-->
         <div v-if="load" class="d-flex justify-content-center">
           <div class="spinner-border text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
         <br v-else />
+        <!--Affichage de ce que le router nous envoie-->
         <router-view :apiurl="apiUrl"></router-view>
       </div>
     </div>
-    <script src="/dist/build.js"></script>
+    <script src="./dist/build.js"></script>
   </body>
 </html>

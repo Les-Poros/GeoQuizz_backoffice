@@ -1,4 +1,5 @@
 <template>
+ <!--Bouton connection / inscription-->
   <div class="d-flex justify-content-center app">
     <router-link :to="{ name: 'Login'}">
       <div class="text-center m-2 btn btn-warning">

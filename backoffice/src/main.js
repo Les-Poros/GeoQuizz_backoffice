@@ -11,6 +11,7 @@ import Inscription from "./Inscription.vue";
 
 import axios from "axios";
 
+//Contruction de nos routes
 const routes = [
   { name: "Accueil", path: "/", component: Accueil },
   { name: "Series", path: "/series", component: ListeSeries },
@@ -25,7 +26,7 @@ const routes = [
   { name: "Inscription", path: "/inscription", component: Inscription }
 ];
 
-
+//Construction d'un router avec nos routes
 const router = new VueRouter({
   routes
 });
@@ -37,6 +38,7 @@ const app = new Vue({
     load:false
   },
   created() {
+    //On set des parametres par defauts de nos requetes axios
     axios.interceptors.request.use((config) => {
       this.load = true;
       return config;

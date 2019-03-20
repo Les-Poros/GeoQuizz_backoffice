@@ -1,11 +1,13 @@
 <template>
   <div class="justify-content-center text-white app">
     <h1 class="bg-warning m-0 text-dark text-center">Photos de la zone</h1>
+     <!--Bouton ajouter une serie-->
     <div class="m-0 text-dark text-center" style="background-color:#e0a800;">
       <router-link :to="{ name: 'CreationPhoto' ,params:{idSerie:this.$route.params.idSerie}}">
         <button class="btn m-1 btn-primary">Ajouter une photo</button>
       </router-link>
     </div>
+     <!-- Affichage liste photos-->
     <div class="row bg-dark m-0">
       <div
         class="card rounded-0 bg-dark p-3 text-center border-warning col-lg-4 col-sm-6 col-12"
@@ -41,6 +43,7 @@ export default {
     };
   },
   methods: {
+    //Permet de recuperer les photos de la serie en cours
     getPhotos: function() {
       axios
         .get(this.apiurl + "series/" + this.$route.params.idSerie + "/photos", {
@@ -50,7 +53,9 @@ export default {
           }
         })
         .then(response => {
+          //On recupere les données
           this.listePhotos = response["data"]["content"];
+          //on recupere les infos de pagination
           response["data"]["links"].forEach(element => {
             this.$set(
               this.pagination,
@@ -61,6 +66,7 @@ export default {
         });
     }
   },
+   //Watcher qui refresh le component si la route change
   watch: {
     "$route.query"() {
       this.getPhotos();

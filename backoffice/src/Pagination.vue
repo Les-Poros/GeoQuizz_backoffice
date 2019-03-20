@@ -1,5 +1,6 @@
 <template>
 <div class="justify-content-center">
+  <!-- Selecteur taille de la page-->
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <span
@@ -24,6 +25,7 @@
           >Valider</button>
         </div>
       </div>
+      <!--Selecteur page-->
       <nav aria-label="Page navigation border-warning example">
         <ul class="pagination justify-content-center m-0 app">
           <li class="page-item">
@@ -90,6 +92,7 @@ export default {
     };
   },
   methods: {
+    //Permet de changer les parametres actuelle de la route en fonction de la page voulu et de la taille voulu
     pageSuivant: function(page) {
       this.$router.push({
         query: { page: page, size: this.size }

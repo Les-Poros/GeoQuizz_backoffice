@@ -4,6 +4,8 @@
       <span v-if="!$route.params.idSerie">Creation d'une zone</span>
       <span v-else>Modification de la série</span>
     </h1>
+
+     <!-- Affichage info serie-->
     <dl class="row bg-dark m-0 text-center">
       <dt class="col-sm-3 jaune border border-warning py-2">Nom de la zone</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
@@ -38,7 +40,7 @@
         >
       </dd>
     </dl>
-
+ <!--Bouton creation/modif serie-->
     <div class="m-0 p-1 text-dark text-center bg-warning">
       <button
         v-if="!$route.params.idSerie"
@@ -68,6 +70,7 @@ export default {
     };
   },
   methods: {
+    //Permet de créer une nouvelle série
     creerSerie: function() {
       axios
         .post(
@@ -80,13 +83,14 @@ export default {
           }
         )
         .then(response => {
-          this.$router.push({
+          this.$router.push({//Redirection vers la série créé
             name: "Serie",
             params: { idSerie: response["data"]["id"] },
             query: { page: 0, size: 6 }
           });
         });
     },
+    //Permet de modifier la serie choisit 
     ModifierSerie: function() {
       axios
         .put(
@@ -99,13 +103,14 @@ export default {
           }
         )
         .then(response => {
-          this.$router.push({
+          this.$router.push({//Redirection vers la série modifié
             name: "Serie",
             params: { id: this.$route.params.idSerie },
             query: { page: 0, size: 6 }
           });
         });
     },
+    //Permet d'initialiser la page on fonction de si on souhaite créer ou modifier une série
     initPage: function() {
       if (this.$route.params.idSerie) {
         axios
@@ -118,6 +123,7 @@ export default {
       }
     }
   },
+   //Watcher qui refresh le component si la route change
   watch: {
     $route() {
       this.zone = "";

@@ -1,6 +1,7 @@
 <template>
   <div class="text-center text-dark">
     <h1 class="bg-warning text-dark m-0 text-center">Connexion</h1>
+    <!-- Affichage info connection-->
     <dl class="row bg-dark m-0 text-center">
       <dt class="col-sm-3 jaune border border-warning py-2">Pseudo</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
@@ -12,7 +13,6 @@
           v-model="username"
         >
       </dd>
-
       <dt class="col-sm-3 jaune border border-warning py-2">Mot de passe</dt>
       <dd class="col-sm-9 border border-warning m-0 p-0">
         <input
@@ -31,6 +31,7 @@
               S'inscrire ici
             </router-link>
         </div>
+        <!--Bouton connection-->
     <div class="m-0 p-1 text-dark text-center bg-warning">
       <button
         v-bind:disabled="!password || !username"
@@ -53,6 +54,7 @@ export default {
     };
   },
   methods: {
+    //Permet de se connecter au backoffice
     connection: function() {
       let formData = new FormData();
       formData.append("password", this.password);
@@ -64,17 +66,16 @@ export default {
           }
         })
         .then(response => {
-          this.$router.push({
+          this.$router.push({//Redirection vers la listes des series
             name: "Series",
             query: { page: 0, size: 6 }
           });
         })
-        .catch(error => {
+        .catch(error => { //Si identifiant incorrect
             this.echec=true
         });
     }
-  },
-  created() {}
+  }
 };
 </script>
     

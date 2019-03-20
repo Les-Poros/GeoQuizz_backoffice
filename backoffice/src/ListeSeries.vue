@@ -7,6 +7,7 @@
         <button class="btn m-1 btn-primary">Créer une zone</button>
       </router-link>
     </div>
+    <!-- Affichage liste series-->
     <table class="table table-hover table-dark text-center m-0">
       <thead>
         <tr class="table-active">
@@ -25,6 +26,7 @@
         </tr>
       </tbody>
     </table>
+     <!--Affichage pagination-->
     <pagination :pagination="pagination"></pagination>
   </div>
 </template>
@@ -44,6 +46,7 @@ export default {
     };
   },
   methods: {
+    //Permet de recuperer les series existantes
     getSerie: function() {
       axios
         .get(this.apiurl + "series", {
@@ -53,7 +56,9 @@ export default {
           }
         })
         .then(response => {
+          //On recupere les données
           this.listSeries = response["data"]["content"];
+          //on recupere les infos de pagination
           response["data"]["links"].forEach(element => {
             this.$set(
               this.pagination,
@@ -64,6 +69,7 @@ export default {
         });
     }
   },
+   //Watcher qui refresh le component si la route change
   watch: {
     "$route.query"() {
       this.getSerie();

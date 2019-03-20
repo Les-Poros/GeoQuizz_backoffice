@@ -51,6 +51,7 @@ export default {
     };
   },
   methods: {
+    //Permet de s'inscrire sur le backoffice
     inscription: function() {
       axios
         .post(
@@ -63,6 +64,7 @@ export default {
           }
         )
         .then(response => {
+          //Si inscription reussi, on se connecte directement
           let formData = new FormData();
           formData.append("password", this.password);
           formData.append("username", this.username);
@@ -80,12 +82,11 @@ export default {
             });
         })
 
-        .catch(error => {
+        .catch(error => {//Si le pseudo existe deja
           this.echec = true;
         });
     }
-  },
-  created() {}
+  }
 };
 </script>
     
