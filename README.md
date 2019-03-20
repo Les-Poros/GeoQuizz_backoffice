@@ -7,7 +7,7 @@ Membres du projet :
 - Quentin Rimet   ( QuentinRimet )
 
 # Prérequis :
-
+* npm
 * Avoir lancé les micro-services
 
 # Pour récupérer le back office
@@ -21,11 +21,9 @@ Membres du projet :
 ## install dependencies
 * npm install
 
-## serve with hot reload at localhost:8080
+## Mode dev sur localhost:8080
 * npm run dev
 
-## build for production with minification
+## Build pour mettre en production
 * npm run build
-
-## voir le back office dans un navigateur
-* À l'aide d'un serveur, lancer dans un navigateur au port 8080 le fichier index.html
+* lancer index.html
