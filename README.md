@@ -18,6 +18,8 @@ Membres du projet :
     
 # Pour lancer le back office
 
+Avant de le lancer, modifier les informations du conf.json avec vos informations
+
 ## install dependencies
 * npm install
 
