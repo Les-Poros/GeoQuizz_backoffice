@@ -125,7 +125,8 @@ export default {
           {
             descr: this.descr,
             longitude: this.longitude,
-            latitude: this.latitude
+            latitude: this.latitude,
+            url:this.url
           },
           {
             headers: {
@@ -164,7 +165,7 @@ export default {
           })
           .then(response => {
             this.url = response.data.secure_url;
-            if (this.$route.params.photoId) this.ModifierPhoto();
+            if (this.$route.params.idPhoto) this.ModifierPhoto();
             else this.creerPhoto();
           });
       }else{
